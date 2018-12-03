@@ -7,6 +7,7 @@ import { ComponentFactoryResolver, ComponentRef, Directive, Input, OnInit, ViewC
   import { DateComponent } from "../date/date.component";
   import { RadiobuttonComponent } from "../radiobutton/radiobutton.component";
   import { CheckboxComponent } from "../checkbox/checkbox.component";
+  import { TextareaComponent } from "../textarea/textarea.component";
 
   const componentMapper = {
     input: InputComponent,
@@ -14,7 +15,8 @@ import { ComponentFactoryResolver, ComponentRef, Directive, Input, OnInit, ViewC
     select: SelectComponent,
     date: DateComponent,
     radiobutton: RadiobuttonComponent,
-    checkbox: CheckboxComponent
+    checkbox: CheckboxComponent,
+    textarea: TextareaComponent,
   };
 
 @Directive({

@@ -1,0 +1,9 @@
+<h1 mat-dialog-title>Add Customer</h1>
+<div mat-dialog-content> 
+    <dynamic-form *ngIf='regConfig' [fields]="regConfig" (submit)="submit($event)">
+      </dynamic-form>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancel</button>
+  <button mat-button [mat-dialog-close]="data.animal" cdkFocusInitial>Save</button>
+</div>

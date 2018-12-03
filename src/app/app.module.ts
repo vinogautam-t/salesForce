@@ -16,6 +16,10 @@ import { DynamicFieldDirective } from './components/dynamic-field/dynamic-field.
 import { DynamicFormComponent } from './components/dynamic-form/dynamic-form.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { SalesComponent } from './pages/sales/sales.component';
+import { CustomersComponent } from './pages/customers/customers.component';
+import { CustomerAddModule } from './pages/customers/customers.component';
+import { AddCustomerComponent } from './pages/customers/add-customer/add-customer.component';
+import { TextareaComponent } from './components/textarea/textarea.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +33,11 @@ import { SalesComponent } from './pages/sales/sales.component';
     DynamicFieldDirective,
     DynamicFormComponent,
     DashboardComponent,
-    SalesComponent
+    SalesComponent,
+    CustomersComponent,
+    AddCustomerComponent,
+    CustomerAddModule,
+    TextareaComponent
   ],
   imports: [
     BrowserModule,
@@ -45,7 +53,9 @@ import { SalesComponent } from './pages/sales/sales.component';
     SelectComponent,
     DateComponent,
     RadiobuttonComponent,
-    CheckboxComponent
+    CheckboxComponent,
+    TextareaComponent,
+    CustomerAddModule
   ],
   providers: [],
   bootstrap: [AppComponent]

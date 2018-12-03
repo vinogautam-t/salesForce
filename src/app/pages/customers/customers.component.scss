@@ -1,0 +1,36 @@
+table {
+    width: 100%;
+  }
+
+.template-view{
+    margin: 50px 20px;
+    padding: 1em;
+    -webkit-transform: translateX(200px);
+    -ms-transform: translateX(200px);
+    -o-transform: translateX(200px);
+    transform: translateX(200px);
+    opacity: 0;
+    -webkit-animation: start 1s ease-out forwards;
+    -o-animation: start 1s ease-out forwards;
+    animation: start 1s ease-out forwards;
+}
+
+.header{
+    background-color: #e86e69;
+    color: white;
+    margin: 10px 0;
+    padding: 10px;
+}
+
+footer{
+    margin: 5px;
+    padding: 10px;
+}
+
+.pull-right{
+    float:right;
+}
+
+.clearfix {
+    float: both;
+}
