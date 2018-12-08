@@ -3,6 +3,7 @@ import {MatPaginator, MatTableDataSource, MatSort, MatDialog, MatDialogRef, MAT_
 import { Validators } from "@angular/forms";
 import { FieldConfig } from "../../field.interface";
 import { DynamicFormComponent } from "../../components/dynamic-form/dynamic-form.component";
+import {SelectionModel} from '@angular/cdk/collections';
 
 @Component({
   selector: 'app-customers',
@@ -12,11 +13,15 @@ import { DynamicFormComponent } from "../../components/dynamic-form/dynamic-form
 export class CustomersComponent implements OnInit {
 
   customer: CustomerData;
+  isEditable: boolean;
+  isDeletable: boolean;
 
   constructor(public dialog: MatDialog) { }
 
-  displayedColumns: string[] = ['position', 'name', 'email', 'mobile_no', 'address', 'state', 'city', 'pincode'];
+  displayedColumns: string[] = ['select', 'position', 'name', 'email', 'mobile_no', 'address', 'state', 'city', 'pincode'];
   dataSource = new MatTableDataSource<CustomerInfo>(ELEMENT_DATA);
+  selection = new SelectionModel<CustomerData>(true, []);
+
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -24,12 +29,58 @@ export class CustomersComponent implements OnInit {
   ngOnInit() {
      this.dataSource.paginator = this.paginator;
      this.dataSource.sort = this.sort;
+     this.isEditable = false;
+     this.isDeletable = false;
   }
 
-  openDialog(): void {
+  /** Whether the number of selected elements matches the total number of rows. */
+  isAllSelected() {
+    const numSelected = this.selection.selected.length;
+    const numRows = this.dataSource.data.length;
+    return numSelected === numRows;
+  }
+
+  /** Selects all rows if they are not all selected; otherwise clear selection. */
+  masterToggle() {
+    this.isAllSelected() ?
+        this.selection.clear() :
+        this.dataSource.data.forEach(row => this.selection.select(row));
+  }
+
+  rowClick(e, row){
+    // e.stopPropagation();
+    if(!this.selection.isSelected(row)){
+      console.log(row);
+      (this.selection.selected.length == 0) ? this.isEditable = true : this.isEditable = false;
+      this.isDeletable = true;
+    }else{
+      if(this.selection.selected.length == 2){
+        this.isEditable = true ;
+      }else{
+        this.isEditable = false;
+      }
+      if(this.selection.selected.length != 1){
+        this.isDeletable = true;
+      }else{
+        this.isDeletable = false;
+      }
+    }
+  }
+
+  allRowClick(e){
+    if(!this.isAllSelected()){
+      this.isDeletable = true;
+      this.isEditable = false;
+    }else{
+      this.isDeletable = false;
+    }
+      
+  }
+
+  openDialog(state): void {
     const dialogRef = this.dialog.open(CustomerAddModule, {
       width: '90%',
-      data: {name: 'pradeep', animal: ''}
+      data: {}
     });
 
     dialogRef.afterClosed().subscribe(result => {
