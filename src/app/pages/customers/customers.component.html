@@ -4,81 +4,83 @@
   </div>
 
   <div class="mat-elevation-z8 ">
-      <table mat-table matSort [dataSource]="dataSource">
-        <!-- Checkbox Column -->
-        <ng-container matColumnDef="select">
-          <th mat-header-cell *matHeaderCellDef>
-            <mat-checkbox (click)="allRowClick($event)" (change)="$event ? masterToggle() : null"
-                          [checked]="selection.hasValue() && isAllSelected()"
-                          [indeterminate]="selection.hasValue() && !isAllSelected()">
-            </mat-checkbox>
-          </th>
-          <td mat-cell *matCellDef="let row">
-            <mat-checkbox (click)="rowClick($event, row)"
-                          (change)="$event ? selection.toggle(row) : null"
-                          [checked]="selection.isSelected(row)">
-            </mat-checkbox>
-          </td>
-        </ng-container>
+      <div class="table-container">
+        <table mat-table matSort [dataSource]="dataSource">
+          <!-- Checkbox Column -->
+          <ng-container matColumnDef="select">
+            <th mat-header-cell *matHeaderCellDef>
+              <mat-checkbox (click)="allRowClick($event)" (change)="$event ? masterToggle() : null"
+                            [checked]="selection.hasValue() && isAllSelected()"
+                            [indeterminate]="selection.hasValue() && !isAllSelected()">
+              </mat-checkbox>
+            </th>
+            <td mat-cell *matCellDef="let row">
+              <mat-checkbox (click)="rowClick($event, row)"
+                            (change)="$event ? selection.toggle(row) : null"
+                            [checked]="selection.isSelected(row)">
+              </mat-checkbox>
+            </td>
+          </ng-container>
 
-        <!-- Position Column -->
-        <ng-container matColumnDef="position">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> No. </th>
-          <td mat-cell *matCellDef="let element"> {{element.position}} </td>
-        </ng-container>
+          <!-- Position Column -->
+          <ng-container matColumnDef="position">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> No. </th>
+            <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+          </ng-container>
 
-        <!-- Name Column -->
-        <ng-container matColumnDef="name">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
-          <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-        </ng-container>
+          <!-- Name Column -->
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+            <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+          </ng-container>
 
-        <!-- Email Column -->
-        <ng-container matColumnDef="email">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> Email </th>
-          <td mat-cell *matCellDef="let element"> {{element.email}} </td>
-        </ng-container>
+          <!-- Email Column -->
+          <ng-container matColumnDef="email">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Email </th>
+            <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+          </ng-container>
 
-        <!-- Mobile No Column -->
-        <ng-container matColumnDef="mobile_no">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> Mobile No </th>
-          <td mat-cell *matCellDef="let element"> {{element.mobile_no}} </td>
-        </ng-container>
+          <!-- Mobile No Column -->
+          <ng-container matColumnDef="mobile_no">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Mobile No </th>
+            <td mat-cell *matCellDef="let element"> {{element.mobile_no}} </td>
+          </ng-container>
 
-        <!-- Address Column -->
-        <ng-container matColumnDef="address">
-          <th mat-header-cell *matHeaderCellDef> Address </th>
-          <td mat-cell *matCellDef="let element"> {{element.address}} </td>
-        </ng-container>
+          <!-- Address Column -->
+          <ng-container matColumnDef="address">
+            <th mat-header-cell *matHeaderCellDef> Address </th>
+            <td mat-cell *matCellDef="let element"> {{element.address}} </td>
+          </ng-container>
 
-        <!-- State Column -->
-        <ng-container matColumnDef="state">
-          <th mat-header-cell *matHeaderCellDef> State </th>
-          <td mat-cell *matCellDef="let element"> {{element.state}} </td>
-        </ng-container>
+          <!-- State Column -->
+          <ng-container matColumnDef="state">
+            <th mat-header-cell *matHeaderCellDef> State </th>
+            <td mat-cell *matCellDef="let element"> {{element.state}} </td>
+          </ng-container>
 
-        <!--City Column -->
-        <ng-container matColumnDef="city">
-          <th mat-header-cell *matHeaderCellDef>City </th>
-          <td mat-cell *matCellDef="let element"> {{element.city}} </td>
-        </ng-container>
+          <!--City Column -->
+          <ng-container matColumnDef="city">
+            <th mat-header-cell *matHeaderCellDef>City </th>
+            <td mat-cell *matCellDef="let element"> {{element.city}} </td>
+          </ng-container>
 
-        <!-- Pincode Column -->
-        <ng-container matColumnDef="pincode">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> Pincode </th>
-          <td mat-cell *matCellDef="let element"> {{element.pincode}} </td>
-        </ng-container>
+          <!-- Pincode Column -->
+          <ng-container matColumnDef="pincode">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Pincode </th>
+            <td mat-cell *matCellDef="let element"> {{element.pincode}} </td>
+          </ng-container>
 
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-      </table>
+          <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+      </div>
 
-      <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+      <mat-paginator [pageSizeOptions]="[5, 10]" showFirstLastButtons></mat-paginator>
 
       <footer>
-          <button class='pull-right' [disabled]='!isDeletable' mat-button mat-raised-button color='warn' (click)="openDialog()">Delete</button>
-          <button class='pull-right' [disabled]='!isEditable' mat-button mat-raised-button color='accent' (click)="openDialog()">Edit</button>
-          <button class='pull-right' mat-button mat-raised-button color='primary' (click)="openDialog()">Add</button>
+          <button class='pull-right' [disabled]='!isDeletable' mat-button mat-raised-button color='warn' (click)="deleteCustomer()">Delete</button>
+          <button class='pull-right' [disabled]='!isEditable' mat-button mat-raised-button color='accent' (click)="editCustomer()">Edit</button>
+          <button class='pull-right' [disabled]='selectedRows.length > 0' mat-button mat-raised-button color='primary' (click)="openDialog('add')">Add</button>
           <div class='clearfix'></div>
       </footer> 
   </div>

@@ -31,11 +31,8 @@ footer{
     }
 }
 
-.pull-right{
-    float:right;
-}
-
-.clearfix {
-    float: both;
+.table-container {
+    max-height: 300px;
+    overflow: auto;
 }
 

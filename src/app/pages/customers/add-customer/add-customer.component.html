@@ -1,9 +1,15 @@
-<h1 mat-dialog-title>Add Customer</h1>
+<h1 mat-dialog-title>{{data.title}}</h1>
 <div mat-dialog-content> 
-    <dynamic-form *ngIf='regConfig' [fields]="regConfig" (submit)="submit($event)">
-      </dynamic-form>
+    <dynamic-form *ngIf='regConfig && data.state != "delete"' [fields]="regConfig" (submit)="submit($event)">
+    </dynamic-form>
+
+    <div *ngIf='data.state == "delete"'>
+      <p>Are You Sure, You wated to delete selected {{data.values.length}} {{ (data.values.length == 1) ? "row" : "rows"}}. </p>
+    </div>
+
+
 </div>
-<div mat-dialog-actions>
-  <button mat-button (click)="onNoClick()">Cancel</button>
-  <button mat-button [mat-dialog-close]="data.animal" cdkFocusInitial>Save</button>
+<div *ngIf='data.state == "delete"'>
+  <button mat-button color="warn" class='pull-right' (click)="onNoClick()">Cancel</button>
+  <button mat-button color="primary" class='pull-right' [mat-dialog-close]="data" cdkFocusInitial>{{data.action}}</button>
 </div>
