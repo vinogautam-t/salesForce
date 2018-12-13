@@ -4,11 +4,13 @@ import { Validators } from "@angular/forms";
 import { FieldConfig } from "../../field.interface";
 import { DynamicFormComponent } from "../../components/dynamic-form/dynamic-form.component";
 import {SelectionModel} from '@angular/cdk/collections';
+import {ApiService} from '../../services/api/api.service';
 
 @Component({
   selector: 'app-customers',
   templateUrl: './customers.component.html',
-  styleUrls: ['./customers.component.scss']
+  styleUrls: ['./customers.component.scss'],
+  providers: [ApiService]
 })
 export class CustomersComponent implements OnInit {
 
@@ -16,7 +18,7 @@ export class CustomersComponent implements OnInit {
   isEditable: boolean;
   isDeletable: boolean;
 
-  constructor(public dialog: MatDialog) { }
+  constructor(public dialog: MatDialog, public apiService: ApiService) { }
 
   displayedColumns: string[] = ['select', 'position', 'name', 'email', 'mobile_no', 'address', 'state', 'city', 'pincode'];
   dataSource = new MatTableDataSource<CustomerInfo>(ELEMENT_DATA);
@@ -35,6 +37,10 @@ export class CustomersComponent implements OnInit {
     this.dataSource.sort = this.sort;
      this.isEditable = false;
      this.isDeletable = false;
+     this.apiService.getCustomerList().subscribe((data) => {
+        console.log(data);
+       // ELEMENT_DATA = data;
+     });
   }
 
   /** Whether the number of selected elements matches the total number of rows. */
@@ -292,24 +298,224 @@ export interface CustomerInfo {
 }
 
 let ELEMENT_DATA: CustomerInfo[] = [
-  {id: 1,  position: 1, name: 'pradeep', email: 'pradeep@gmail.com', mobile_no: '789456123', 'address': '1st cross st', state: 'Tamil Nadu', city: 'Chennai', pincode: 600106},
-  {id: 2,  position: 2, name: 'ram', email: 'ram@gmail.com', mobile_no: '125478963', 'address': '1st cross st', state: 'Tamil Nadu', city: 'Chennai', pincode: 600105},
-  {id: 3,  position: 3, name: 'bharath', email: 'bharath@gmail.com', mobile_no: '125478963', 'address': '1st cross st', state: 'Tamil Nadu', city: 'Chennai', pincode: 600001},
-  {id: 4,  position: 4, name: 'bala', email: 'bala@gmail.com', mobile_no: '789456123', 'address': '1st cross st', state: 'Tamil Nadu', city: 'Chennai', pincode: 600001},
-  {id: 5,  position: 5, name: 'vasanth', email: 'vasanth@gmail.com', mobile_no: '789456123', 'address': '1st cross st', state: 'Tamil Nadu', city: 'Chennai', pincode: 600001},
-  {id: 6,  position: 6, name: 'arumugam', email: 'arumugam@gmail.com', mobile_no: '789456123', 'address': '1st cross st', state: 'Tamil Nadu', city: 'Chennai', pincode: 600001},
-  {id: 7,  position: 7, name: 'vinod', email: 'vinod@gmail.com', mobile_no: '789456123', 'address': '1st cross st', state: 'Tamil Nadu', city: 'Chennai', pincode: 600001},
-  {id: 8,  position: 8, name: 'praveen', email: 'praveen@gmail.com', mobile_no: '789456123', 'address': '1st cross st', state: 'Tamil Nadu', city: 'Chennai', pincode: 600001},
-  {id: 9,  position: 9, name: 'doss', email: 'doss@gmail.com', mobile_no: '789456123', 'address': '1st cross st', state: 'Tamil Nadu', city: 'Chennai', pincode: 600001},
-  {id: 10, position: 10, name: 'geetha', email: 'geetha@gmail.com', mobile_no: '789456123', 'address': '1st cross st', state: 'Tamil Nadu', city: 'Chennai', pincode: 600001},
-  {id: 11, position: 11, name: 'guru', email: 'guru@gmail.com', mobile_no: '789456123', 'address': '1st cross st', state: 'Tamil Nadu', city: 'Chennai', pincode: 600001},
-  {id: 12, position: 12, name: 'duruva', email: 'duruva@gmail.com', mobile_no: '789456123', 'address': '1st cross st', state: 'Tamil Nadu', city: 'Chennai', pincode: 600001},
-  {id: 13, position: 13, name: 'mahesh', email: 'mahesh@gmail.com', mobile_no: '789456123', 'address': '1st cross st', state: 'Tamil Nadu', city: 'Chennai', pincode: 600001},
-  {id: 14, position: 14, name: 'sankar', email: 'sankar@gmail.com', mobile_no: '789456123', 'address': '1st cross st', state: 'Tamil Nadu', city: 'Chennai', pincode: 600001},
-  {id: 15, position: 15, name: 'chitti', email: 'chitti@gmail.com', mobile_no: '789456123', 'address': '1st cross st', state: 'Tamil Nadu', city: 'Chennai', pincode: 600001},
-  {id: 16, position: 16, name: 'manikam', email: 'manikam@gmail.com', mobile_no: '789456123', 'address': '1st cross st', state: 'Tamil Nadu', city: 'Chennai', pincode: 600001},
-  {id: 17, position: 17, name: 'raju', email: 'raju@gmail.com', mobile_no: '789456123', 'address': '1st cross st', state: 'Tamil Nadu', city: 'Chennai', pincode: 600001},
-  {id: 18, position: 18, name: 'arul', email: 'arul@gmail.com', mobile_no: '789456123', 'address': '1st cross st', state: 'Tamil Nadu', city: 'Chennai', pincode: 600001},
-  {id: 19, position: 19, name: 'vasanthi', email: 'vasanthi@gmail.com', mobile_no: '789456123', 'address': '1st cross st', state: 'Tamil Nadu', city: 'Chennai', pincode: 600001},
-  {id: 20, position: 20, name: 'suganya', email: 'suganya@gmail.com', mobile_no: '789456123', 'address': '1st cross st', state: 'Tamil Nadu', city: 'Chennai', pincode: 600001},
+  {
+    "id": 1,
+    "position": 1,
+    "name": "pradeep",
+    "email": "pradeep@gmail.com",
+    "mobile_no": "789456123",
+    "address": "1st cross st",
+    "state": "Tamil Nadu",
+    "city": "Chennai",
+    "pincode": 600106
+  },
+  {
+    "id": 2,
+    "position": 2,
+    "name": "ram",
+    "email": "ram@gmail.com",
+    "mobile_no": "125478963",
+    "address": "1st cross st",
+    "state": "Tamil Nadu",
+    "city": "Chennai",
+    "pincode": 600105
+  },
+  {
+    "id": 3,
+    "position": 3,
+    "name": "bharath",
+    "email": "bharath@gmail.com",
+    "mobile_no": "125478963",
+    "address": "1st cross st",
+    "state": "Tamil Nadu",
+    "city": "Chennai",
+    "pincode": 600001
+  },
+  {
+    "id": 4,
+    "position": 4,
+    "name": "bala",
+    "email": "bala@gmail.com",
+    "mobile_no": "789456123",
+    "address": "1st cross st",
+    "state": "Tamil Nadu",
+    "city": "Chennai",
+    "pincode": 600001
+  },
+  {
+    "id": 5,
+    "position": 5,
+    "name": "vasanth",
+    "email": "vasanth@gmail.com",
+    "mobile_no": "789456123",
+    "address": "1st cross st",
+    "state": "Tamil Nadu",
+    "city": "Chennai",
+    "pincode": 600001
+  },
+  {
+    "id": 6,
+    "position": 6,
+    "name": "arumugam",
+    "email": "arumugam@gmail.com",
+    "mobile_no": "789456123",
+    "address": "1st cross st",
+    "state": "Tamil Nadu",
+    "city": "Chennai",
+    "pincode": 600001
+  },
+  {
+    "id": 7,
+    "position": 7,
+    "name": "vinod",
+    "email": "vinod@gmail.com",
+    "mobile_no": "789456123",
+    "address": "1st cross st",
+    "state": "Tamil Nadu",
+    "city": "Chennai",
+    "pincode": 600001
+  },
+  {
+    "id": 8,
+    "position": 8,
+    "name": "praveen",
+    "email": "praveen@gmail.com",
+    "mobile_no": "789456123",
+    "address": "1st cross st",
+    "state": "Tamil Nadu",
+    "city": "Chennai",
+    "pincode": 600001
+  },
+  {
+    "id": 9,
+    "position": 9,
+    "name": "doss",
+    "email": "doss@gmail.com",
+    "mobile_no": "789456123",
+    "address": "1st cross st",
+    "state": "Tamil Nadu",
+    "city": "Chennai",
+    "pincode": 600001
+  },
+  {
+    "id": 10,
+    "position": 10,
+    "name": "geetha",
+    "email": "geetha@gmail.com",
+    "mobile_no": "789456123",
+    "address": "1st cross st",
+    "state": "Tamil Nadu",
+    "city": "Chennai",
+    "pincode": 600001
+  },
+  {
+    "id": 11,
+    "position": 11,
+    "name": "guru",
+    "email": "guru@gmail.com",
+    "mobile_no": "789456123",
+    "address": "1st cross st",
+    "state": "Tamil Nadu",
+    "city": "Chennai",
+    "pincode": 600001
+  },
+  {
+    "id": 12,
+    "position": 12,
+    "name": "duruva",
+    "email": "duruva@gmail.com",
+    "mobile_no": "789456123",
+    "address": "1st cross st",
+    "state": "Tamil Nadu",
+    "city": "Chennai",
+    "pincode": 600001
+  },
+  {
+    "id": 13,
+    "position": 13,
+    "name": "mahesh",
+    "email": "mahesh@gmail.com",
+    "mobile_no": "789456123",
+    "address": "1st cross st",
+    "state": "Tamil Nadu",
+    "city": "Chennai",
+    "pincode": 600001
+  },
+  {
+    "id": 14,
+    "position": 14,
+    "name": "sankar",
+    "email": "sankar@gmail.com",
+    "mobile_no": "789456123",
+    "address": "1st cross st",
+    "state": "Tamil Nadu",
+    "city": "Chennai",
+    "pincode": 600001
+  },
+  {
+    "id": 15,
+    "position": 15,
+    "name": "chitti",
+    "email": "chitti@gmail.com",
+    "mobile_no": "789456123",
+    "address": "1st cross st",
+    "state": "Tamil Nadu",
+    "city": "Chennai",
+    "pincode": 600001
+  },
+  {
+    "id": 16,
+    "position": 16,
+    "name": "manikam",
+    "email": "manikam@gmail.com",
+    "mobile_no": "789456123",
+    "address": "1st cross st",
+    "state": "Tamil Nadu",
+    "city": "Chennai",
+    "pincode": 600001
+  },
+  {
+    "id": 17,
+    "position": 17,
+    "name": "raju",
+    "email": "raju@gmail.com",
+    "mobile_no": "789456123",
+    "address": "1st cross st",
+    "state": "Tamil Nadu",
+    "city": "Chennai",
+    "pincode": 600001
+  },
+  {
+    "id": 18,
+    "position": 18,
+    "name": "arul",
+    "email": "arul@gmail.com",
+    "mobile_no": "789456123",
+    "address": "1st cross st",
+    "state": "Tamil Nadu",
+    "city": "Chennai",
+    "pincode": 600001
+  },
+  {
+    "id": 19,
+    "position": 19,
+    "name": "vasanthi",
+    "email": "vasanthi@gmail.com",
+    "mobile_no": "789456123",
+    "address": "1st cross st",
+    "state": "Tamil Nadu",
+    "city": "Chennai",
+    "pincode": 600001
+  },
+  {
+    "id": 20,
+    "position": 20,
+    "name": "suganya",
+    "email": "suganya@gmail.com",
+    "mobile_no": "789456123",
+    "address": "1st cross st",
+    "state": "Tamil Nadu",
+    "city": "Chennai",
+    "pincode": 600001
+  }
 ];

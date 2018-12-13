@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -20,6 +21,9 @@ import { CustomersComponent } from './pages/customers/customers.component';
 import { CustomerAddModule } from './pages/customers/customers.component';
 import { AddCustomerComponent } from './pages/customers/add-customer/add-customer.component';
 import { TextareaComponent } from './components/textarea/textarea.component';
+import { InventoriesComponent } from './pages/inventories/inventories.component';
+
+import { ApiService } from './services/api/api.service';
 
 @NgModule({
   declarations: [
@@ -37,7 +41,8 @@ import { TextareaComponent } from './components/textarea/textarea.component';
     CustomersComponent,
     AddCustomerComponent,
     CustomerAddModule,
-    TextareaComponent
+    TextareaComponent,
+    InventoriesComponent
   ],
   imports: [
     BrowserModule,
@@ -46,6 +51,7 @@ import { TextareaComponent } from './components/textarea/textarea.component';
     MaterialModule,
     ReactiveFormsModule,
     FormsModule,
+    HttpClientModule,
   ],
   entryComponents: [
     InputComponent,
@@ -57,7 +63,7 @@ import { TextareaComponent } from './components/textarea/textarea.component';
     TextareaComponent,
     CustomerAddModule
   ],
-  providers: [],
+  providers: [ApiService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
