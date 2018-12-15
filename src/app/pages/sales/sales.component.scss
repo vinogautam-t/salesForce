@@ -1,0 +1,44 @@
+.header{
+    background-color: #56D9C9;
+    color: white;
+    margin: 10px 0;
+    padding: 10px;
+    display: inline-flex;
+    width: 100%;
+}
+
+.template-view {
+    margin: auto;
+    padding: 1em;
+    -webkit-transform: translateX(200px);
+    transform: translateX(200px);
+    opacity: 0;
+    -webkit-animation: start 1s ease-out forwards;
+    animation: start 1s ease-out forwards;
+}
+
+.sales-container {
+    height: calc(100vh - 150px);
+    max-height: calc(100vh - 150px);
+    width: 100%;
+}
+
+.header-title {
+    width: 50%;
+    margin-right: 0 !important;
+}
+
+.identifier-no {
+    width: 50%;
+    float: right;
+    text-align: right;
+}
+.clearfix {
+    clear: both;
+}
+
+.customer-container {
+    padding: 10px;
+    // width: 40%;
+    // box-shadow: 2px 0px #d6d6d6;
+}

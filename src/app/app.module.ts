@@ -24,6 +24,8 @@ import { TextareaComponent } from './components/textarea/textarea.component';
 import { InventoriesComponent } from './pages/inventories/inventories.component';
 
 import { ApiService } from './services/api/api.service';
+import { CustomerInputComponent } from './components/customer-input/customer-input.component';
+import { AutocompleteComponent } from './components/autocomplete/autocomplete.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +44,9 @@ import { ApiService } from './services/api/api.service';
     AddCustomerComponent,
     CustomerAddModule,
     TextareaComponent,
-    InventoriesComponent
+    InventoriesComponent,
+    CustomerInputComponent,
+    AutocompleteComponent
   ],
   imports: [
     BrowserModule,
@@ -61,6 +65,7 @@ import { ApiService } from './services/api/api.service';
     RadiobuttonComponent,
     CheckboxComponent,
     TextareaComponent,
+    AutocompleteComponent,
     CustomerAddModule
   ],
   providers: [ApiService],

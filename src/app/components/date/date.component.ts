@@ -3,7 +3,7 @@ import { FormGroup } from "@angular/forms";
 import { FieldConfig } from "../../field.interface";
 @Component({
   selector: "app-date",
-  template: `<mat-form-field class="demo-full-width margin-top" [formGroup]="group">
+  template: `<mat-form-field class="demo-full-width margin-top" [formGroup]="group" [ngStyle]="{'width': field.width}">
   <input matInput [matDatepicker]="picker" [formControlName]="field.name" [placeholder]="field.label">
   <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
   <mat-datepicker #picker></mat-datepicker>

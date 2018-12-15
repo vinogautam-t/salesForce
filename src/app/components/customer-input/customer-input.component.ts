@@ -2,26 +2,38 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Validators } from "@angular/forms";
 import { FieldConfig } from "../../field.interface";
 import { DynamicFormComponent } from "../../components/dynamic-form/dynamic-form.component";
-import {CustomerInputComponent} from '../../components/customer-input/customer-input.component';
+import {ApiService} from '../../services/api/api.service';
 
 @Component({
-  selector: 'app-sales',
-  templateUrl: './sales.component.html',
-  styleUrls: ['./sales.component.scss'],
+  selector: 'app-customer-input',
+  templateUrl: './customer-input.component.html',
+  styleUrls: ['./customer-input.component.scss'],
+  providers: [ApiService]
 })
-export class SalesComponent implements OnInit {
+export class CustomerInputComponent implements OnInit {
+
+  constructor() { }
+
   @ViewChild(DynamicFormComponent) form: DynamicFormComponent;
+  
+  ngOnInit() {
+
+  }
+
   regConfig: FieldConfig[] = [
     {
-      type: "input",
-      label: "Username",
+      type: "autocomplete",
+      label: "Customer Name",
       inputType: "text",
       name: "name",
+      options: ['One', 'Two', 'Three'],
+      value: '',
+      width: '20%',
       validations: [
         {
           name: "required",
           validator: Validators.required,
-          message: "Name Required"
+          message: "Customer Name Required"
         },
         {
           name: "pattern",
@@ -35,6 +47,8 @@ export class SalesComponent implements OnInit {
       label: "Email Address",
       inputType: "email",
       name: "email",
+      value: '',
+      width: '20%',
       validations: [
         {
           name: "required",
@@ -52,58 +66,66 @@ export class SalesComponent implements OnInit {
     },
     {
       type: "input",
-      label: "Password",
-      inputType: "password",
-      name: "password",
+      label: "Mobile No",
+      inputType: "text",
+      name: "mobile_no",
+      value: '',
+      width: '20%',
       validations: [
         {
           name: "required",
           validator: Validators.required,
-          message: "Password Required"
+          message: "Mobile No Required"
+        },
+        {
+          name: "pattern",
+          validator: Validators.pattern(
+            "^[0-9]{1,10}$"
+          ),
+          message: "Invalid Mobile No"
         }
       ]
     },
     {
-      type: "radiobutton",
-      label: "Gender",
-      name: "gender",
-      options: ["Male", "Female"],
-      value: "Male"
-    },
-    {
-      type: "date",
-      label: "DOB",
-      name: "dob",
+      type: "textarea",
+      label: "Address",
+      name: "address",
+      value: '',
+      width: '30%',
       validations: [
         {
           name: "required",
           validator: Validators.required,
-          message: "Date of Birth Required"
+          message: "Address Required"
         }
       ]
     },
     {
       type: "select",
-      label: "Country",
-      name: "country",
-      value: "UK",
-      options: ["India", "UAE", "UK", "US"]
+      label: "State",
+      name: "state",
+      value: '',
+      width: '20%',
+      options: ["Tamil Nadu", "Kerela", "Andhra Pradesh", "Karnataka"]
     },
     {
-      type: "checkbox",
-      label: "Accept Terms",
-      name: "term",
-      value: true
+      type: "select",
+      label: "City",
+      name: "city",
+      value: '',
+      width: '20%',
+      options: ["Chennai", "Madurai", "Trichy", "salem"]
     },
     {
-      type: "button",
-      label: "Save"
-    }
+      type: "input",
+      label: "Pincode",
+      inputType: "text",
+      name: "pincode",
+      value: '',
+      width: '20%',
+      validations: [
+      ]
+    },
   ];
-
-  submit(value: any) {}
-  
-  ngOnInit() {
-  }
 
 }

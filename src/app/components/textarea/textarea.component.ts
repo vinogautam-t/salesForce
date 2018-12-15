@@ -5,7 +5,7 @@ import { FieldConfig } from "../../field.interface";
 @Component({
   selector: 'app-textarea',
   template: `
-            <mat-form-field class="demo-full-width" [formGroup]="group">
+            <mat-form-field class="demo-full-width" [formGroup]="group" [ngStyle]="{'width': field.width}">
             <textarea  matInput [formControlName]="field.name" [placeholder]="field.label" [type]="field.inputType"></textarea>
             <ng-container *ngFor="let validation of field.validations;" ngProjectAs="mat-error">
             <mat-error *ngIf="group.get(field.name).hasError(validation.name)">{{validation.message}}</mat-error>

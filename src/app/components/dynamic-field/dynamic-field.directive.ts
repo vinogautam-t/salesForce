@@ -8,6 +8,7 @@ import { ComponentFactoryResolver, ComponentRef, Directive, Input, OnInit, ViewC
   import { RadiobuttonComponent } from "../radiobutton/radiobutton.component";
   import { CheckboxComponent } from "../checkbox/checkbox.component";
   import { TextareaComponent } from "../textarea/textarea.component";
+  import { AutocompleteComponent } from '../autocomplete/autocomplete.component';
 
   const componentMapper = {
     input: InputComponent,
@@ -17,6 +18,7 @@ import { ComponentFactoryResolver, ComponentRef, Directive, Input, OnInit, ViewC
     radiobutton: RadiobuttonComponent,
     checkbox: CheckboxComponent,
     textarea: TextareaComponent,
+    autocomplete: AutocompleteComponent
   };
 
 @Directive({

@@ -171,6 +171,7 @@ export class CustomerAddModule {
       inputType: "text",
       name: "name",
       value: (!!this.data.values && !!this.data.values.name) ? this.data.values.name : '',
+      width: '30%',
       validations: [
         {
           name: "required",
@@ -190,6 +191,7 @@ export class CustomerAddModule {
       inputType: "email",
       name: "email",
       value: (!!this.data.values && !!this.data.values.email) ? this.data.values.email : '',
+      width: '30%',
       validations: [
         {
           name: "required",
@@ -211,6 +213,7 @@ export class CustomerAddModule {
       inputType: "text",
       name: "mobile_no",
       value: (!!this.data.values && !!this.data.values.mobile_no) ? this.data.values.mobile_no : '',
+      width: '30%',
       validations: [
         {
           name: "required",
@@ -231,6 +234,7 @@ export class CustomerAddModule {
       label: "Address",
       name: "address",
       value: (!!this.data.values && !!this.data.values.address) ? this.data.values.address : '',
+      width: '30%',
       validations: [
         {
           name: "required",
@@ -244,6 +248,7 @@ export class CustomerAddModule {
       label: "State",
       name: "state",
       value: (!!this.data.values && !!this.data.values.state) ? this.data.values.state : '',
+      width: '30%',
       options: ["Tamil Nadu", "Kerela", "Andhra Pradesh", "Karnataka"]
     },
     {
@@ -251,6 +256,7 @@ export class CustomerAddModule {
       label: "City",
       name: "city",
       value: (!!this.data.values && !!this.data.values.city) ? this.data.values.city : '',
+      width: '30%',
       options: ["Chennai", "Madurai", "Trichy", "salem"]
     },
     {
@@ -259,6 +265,7 @@ export class CustomerAddModule {
       inputType: "text",
       name: "pincode",
       value: (!!this.data.values && !!this.data.values.pincode) ? this.data.values.pincode : '',
+      width: '30%',
       validations: [
       ]
     },
