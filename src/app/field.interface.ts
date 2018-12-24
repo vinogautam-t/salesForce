@@ -13,4 +13,10 @@ export interface FieldConfig {
     value?: any;
     validations?: Validator[];
     width?: any;
+    formArray?: Array<any>;
+}
+
+export interface ItemForm {
+    title: string;
+    type: any;
 }

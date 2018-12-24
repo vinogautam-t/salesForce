@@ -10,6 +10,7 @@ import { DynamicFormComponent } from "../../../components/dynamic-form/dynamic-f
 })
 export class AddCustomerComponent implements OnInit {
   @ViewChild(DynamicFormComponent) form: DynamicFormComponent;
+  data: any;
   regConfig: FieldConfig[] = [
     {
       type: "input",

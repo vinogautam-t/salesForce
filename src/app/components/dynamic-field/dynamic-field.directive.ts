@@ -18,7 +18,8 @@ import { ComponentFactoryResolver, ComponentRef, Directive, Input, OnInit, ViewC
     radiobutton: RadiobuttonComponent,
     checkbox: CheckboxComponent,
     textarea: TextareaComponent,
-    autocomplete: AutocompleteComponent
+    autocomplete: AutocompleteComponent,
+    array: Array
   };
 
 @Directive({
@@ -39,12 +40,24 @@ export class DynamicFieldDirective implements OnInit {
   ) { }
 
   ngOnInit() {
-      const factory = this.resolver.resolveComponentFactory(
-        componentMapper[this.field.type]
-      );
-      this.componentRef = this.container.createComponent(factory);
-      this.componentRef.instance.field = this.field;
-      this.componentRef.instance.group = this.group;
+    if(this.field.type != 'array'){
+      this.buildComponent(this.field);
+    }else{
+      var that = this;
+      this.field.formArray.forEach(function(row, index){
+        that.buildComponent(row);
+      });
+    }
+      
+  }
+
+  buildComponent(field) {
+    const factory = this.resolver.resolveComponentFactory(
+      componentMapper[field.type]
+    );
+    this.componentRef = this.container.createComponent(factory);
+    this.componentRef.instance.field = field;
+    this.componentRef.instance.group = this.group;
   }
 
 }

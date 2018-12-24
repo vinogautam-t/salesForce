@@ -3,30 +3,32 @@ import { Validators } from "@angular/forms";
 import { FieldConfig } from "../../field.interface";
 import { DynamicFormComponent } from "../../components/dynamic-form/dynamic-form.component";
 import {ApiService} from '../../services/api/api.service';
+import { UtilityService } from '../../services/utility.service';
 
 @Component({
   selector: 'app-customer-input',
   templateUrl: './customer-input.component.html',
-  styleUrls: ['./customer-input.component.scss'],
-  providers: [ApiService]
+  styleUrls: ['./customer-input.component.scss']
 })
 export class CustomerInputComponent implements OnInit {
 
-  constructor() { }
+
+  customerNameArr = [];
+  
+  constructor (public apiService: ApiService, public utilityService: UtilityService) {
+   }
 
   @ViewChild(DynamicFormComponent) form: DynamicFormComponent;
   
   ngOnInit() {
-
   }
-
+  
   regConfig: FieldConfig[] = [
     {
       type: "autocomplete",
       label: "Customer Name",
       inputType: "text",
       name: "name",
-      options: ['One', 'Two', 'Three'],
       value: '',
       width: '20%',
       validations: [
@@ -127,5 +129,9 @@ export class CustomerInputComponent implements OnInit {
       ]
     },
   ];
+
+  onChangeFields(value: any){
+    this.utilityService.sendCustomerNameInfo(['four', 'five']);
+  }
 
 }

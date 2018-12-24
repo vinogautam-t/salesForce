@@ -1,13 +1,16 @@
-import { Component, OnInit, Input} from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { FormGroup } from "@angular/forms";
 import { FieldConfig } from "../../field.interface";
+import { UtilityService } from '../../services/utility.service';
+import { Subscription } from 'rxjs';
+
 @Component({
   selector: 'app-autocomplete',
   template: `
               <mat-form-field class="demo-full-width" [formGroup]="group" [ngStyle]="{'width': field.width}">
                 <input matInput [formControlName]="field.name" [placeholder]="field.label" [type]="field.inputType" [matAutocomplete]="auto">
                 <mat-autocomplete #auto="matAutocomplete">
-                  <mat-option *ngFor="let v of field.options" [value]="v">
+                  <mat-option *ngFor="let v of options" [value]="v">
                     <span>{{v}}</span>
                   </mat-option>
                 </mat-autocomplete>
@@ -21,9 +24,23 @@ import { FieldConfig } from "../../field.interface";
 export class AutocompleteComponent implements OnInit {
   field: FieldConfig;
   group: FormGroup;
-  constructor() { }
+  options: any;
+  subscription: Subscription;
 
-  ngOnInit() {
-  }
+  constructor(public utilityService: UtilityService) {
+   }
+
+   ngOnInit() {
+    console.log(this.options);
+    this.subscription = this.utilityService.getCustomerNameInfo().subscribe(message => { 
+      this.options = message; 
+      console.log(this.options);
+    });
+   }
+
+  // ngOnDestroy() {
+  //     // unsubscribe to ensure no memory leaks
+  //     this.subscription.unsubscribe();
+  // }
 
 }

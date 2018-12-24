@@ -16,7 +16,8 @@ import { FieldConfig } from "../../field.interface";
 export class TextareaComponent implements OnInit {
 
   constructor() { }
-
+  field: any;
+  group: any;
   ngOnInit() {
   }
 

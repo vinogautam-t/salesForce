@@ -24,8 +24,10 @@ import { TextareaComponent } from './components/textarea/textarea.component';
 import { InventoriesComponent } from './pages/inventories/inventories.component';
 
 import { ApiService } from './services/api/api.service';
+import { UtilityService } from './services/utility.service';
 import { CustomerInputComponent } from './components/customer-input/customer-input.component';
 import { AutocompleteComponent } from './components/autocomplete/autocomplete.component';
+import { ItemFormComponent } from './components/item-form/item-form.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +48,8 @@ import { AutocompleteComponent } from './components/autocomplete/autocomplete.co
     TextareaComponent,
     InventoriesComponent,
     CustomerInputComponent,
-    AutocompleteComponent
+    AutocompleteComponent,
+    ItemFormComponent
   ],
   imports: [
     BrowserModule,
@@ -66,9 +69,10 @@ import { AutocompleteComponent } from './components/autocomplete/autocomplete.co
     CheckboxComponent,
     TextareaComponent,
     AutocompleteComponent,
-    CustomerAddModule
+    CustomerAddModule,
+    ItemFormComponent
   ],
-  providers: [ApiService],
+  providers: [ApiService, UtilityService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Validators } from "@angular/forms";
-import { FieldConfig } from "../../field.interface";
+import { FieldConfig, ItemForm } from "../../field.interface";
 import { DynamicFormComponent } from "../../components/dynamic-form/dynamic-form.component";
 import {CustomerInputComponent} from '../../components/customer-input/customer-input.component';
 
@@ -9,8 +9,13 @@ import {CustomerInputComponent} from '../../components/customer-input/customer-i
   templateUrl: './sales.component.html',
   styleUrls: ['./sales.component.scss'],
 })
+
 export class SalesComponent implements OnInit {
+
+  itemInfo: ItemForm = {'title': "Item Info", 'type': "item"};
+
   @ViewChild(DynamicFormComponent) form: DynamicFormComponent;
+  
   regConfig: FieldConfig[] = [
     {
       type: "input",
