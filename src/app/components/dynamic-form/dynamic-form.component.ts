@@ -19,13 +19,17 @@ import { FieldConfig, Validator } from "../../field.interface";
   exportAs: "dynamicForm",
   selector: "dynamic-form",
   template: `
-  <form class="dynamic-form" [formGroup]="form" (submit)="onSubmit($event)" (changeEvent)="onChangeFields($event)">
+  <form ng-if='!!form' class="dynamic-form" [formGroup]="form" (submit)="onSubmit($event)" (changeEvent)="onChangeFields($event)">
   <ng-container *ngFor="let field of fields;">
     <ng-container ng-if='field.type != "array"' dynamicField [field]="field" [group]="form"></ng-container>
 
-    <ng-container ng-if='field.type == "array"' formArrayName="field.name">
-        <ng-container *ngFor="let innerField of field.formArray;">
-          <ng-container  dynamicField [field]="innerField" [group]="form.controls.items"></ng-container>
+    <ng-container ng-if='field.type == "array" && !!form.controls?.items?' formArrayName="{{field.name}}">
+        <ng-container *ngFor="let innerField of form.controls?.items?.controls; let i = index;">
+          <div [formGroupName]="i">
+          <ng-container *ngFor="let iField of field.formArray;">
+              <ng-container dynamicField [field]="iField" [group]="form.controls?.items?.controls[i]"></ng-container>
+          </ng-container>    
+          </div>
         </ng-container>
     </ng-container>
 
@@ -48,6 +52,7 @@ export class DynamicFormComponent implements OnInit {
 
   ngOnInit() {
     this.form = this.createControl();
+    //console.log(this.form);
     this.initChangeCall();
   }
 
@@ -78,6 +83,11 @@ export class DynamicFormComponent implements OnInit {
       }
     });
     return itemField;
+    // return this.fb.group({
+    //   name: '',
+    //   description: '',
+    //   price: ''
+    // });
   }
 
   createControl() {
@@ -85,20 +95,9 @@ export class DynamicFormComponent implements OnInit {
     this.fields.forEach((field, index) => {
       if (field.type === "button") return;
       if(field.type === "array"){
-        var itemArr = this.fb.array([]);
-        
-        itemArr.push(this.addItem(field.formArray));
+        var itemArr = this.fb.array([this.addItem(field.formArray)]);
         group.addControl(field.name, itemArr);
-        // this.itemForms.push(field.formArray);
-        // field.formArray.forEach((innerField, innerIndex) => {
-        //   const control = this.fb.control(
-        //     field.value,
-        //     this.bindValidations(field.validations || [])
-        //   );
-        //   itemGroup.addControl(field.name, control);
-
-        // });
-        //field.formArray
+        // this.addItem(field.formArray, group);
       }else{
         const control = this.fb.control(
           field.value,

@@ -55,9 +55,17 @@ export class DynamicFieldDirective implements OnInit {
     const factory = this.resolver.resolveComponentFactory(
       componentMapper[field.type]
     );
-    this.componentRef = this.container.createComponent(factory);
-    this.componentRef.instance.field = field;
-    this.componentRef.instance.group = this.group;
+    
+    if(!!this.group.get(field.name)){
+      this.componentRef = this.container.createComponent(factory);
+      this.componentRef.instance.field = field;
+      this.componentRef.instance.group = this.group;
+      console.log(field.name);
+      console.log(this.group.get[field.name]);
+    }
+    else if(this.group.get(field.name) == null){
+     
+    }
   }
 
 }

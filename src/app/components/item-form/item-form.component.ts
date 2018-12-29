@@ -31,21 +31,6 @@ export class ItemFormComponent implements OnInit {
 
   regConfig: FieldConfig[] = [
     {
-      type: "input",
-      label: "Sub total",
-      inputType: "number",
-      name: "subTotal",
-      value: '',
-      width: '10%',
-      validations: [
-        {
-          name: "required",
-          validator: Validators.required,
-          message: "Item Name Required"
-        }
-      ]
-    },
-    {
       type: "array",
       label: "Item info",
       inputType: "text",
@@ -183,7 +168,37 @@ export class ItemFormComponent implements OnInit {
         //   ]
         // }
       ]
-    }
+    },
+    {
+      type: "input",
+      label: "Sub total",
+      inputType: "number",
+      name: "subTotal",
+      value: '',
+      width: '10%',
+      validations: [
+        {
+          name: "required",
+          validator: Validators.required,
+          message: "Item Name Required"
+        }
+      ]
+    },
+    {
+      type: "input",
+      label: " total",
+      inputType: "number",
+      name: "Total",
+      value: '',
+      width: '10%',
+      validations: [
+        {
+          name: "required",
+          validator: Validators.required,
+          message: "Item Name Required"
+        }
+      ]
+    },
   ];
 
 
