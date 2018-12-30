@@ -48,7 +48,6 @@ export class DynamicFieldDirective implements OnInit {
         that.buildComponent(row);
       });
     }
-      
   }
 
   buildComponent(field) {
@@ -62,9 +61,6 @@ export class DynamicFieldDirective implements OnInit {
       this.componentRef.instance.group = this.group;
       console.log(field.name);
       console.log(this.group.get[field.name]);
-    }
-    else if(this.group.get(field.name) == null){
-     
     }
   }
 
