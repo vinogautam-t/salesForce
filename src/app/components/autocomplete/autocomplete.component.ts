@@ -7,7 +7,7 @@ import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-autocomplete',
   template: `
-              <mat-form-field class="demo-full-width" [formGroup]="group" [ngStyle]="{'width': field.width}">
+              <mat-form-field [formGroup]="group" [ngClass]="field.classes">
                 <input matInput [formControlName]="field.name" [placeholder]="field.label" [type]="field.inputType" [matAutocomplete]="auto">
                 <mat-autocomplete #auto="matAutocomplete">
                   <mat-option *ngFor="let v of options" [value]="v">

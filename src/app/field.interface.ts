@@ -12,8 +12,9 @@ export interface FieldConfig {
     type: string;
     value?: any;
     validations?: Validator[];
-    width?: any;
+    classes?: any;
     formArray?: Array<any>;
+    disable?: boolean;
 }
 
 export interface ItemForm {

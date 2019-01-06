@@ -13,4 +13,5 @@ export class ApiService {
   getCustomerList() {
     return this.http.get(this.CustomerDataUrl);
   }
+
 }

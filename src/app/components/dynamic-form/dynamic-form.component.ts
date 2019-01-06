@@ -19,7 +19,7 @@ import { FieldConfig, Validator } from "../../field.interface";
   exportAs: "dynamicForm",
   selector: "dynamic-form",
   template: `
-  <form *ngIf='!!form' class="dynamic-form" [formGroup]="form" (submit)="onSubmit($event)" (changeEvent)="onChangeFields($event)">
+  <form *ngIf='!!form' class="dynamic-form" [formGroup]="form" (submit)="onSubmit($event)" (changeEvent)="onChangeFields($event, 'form')">
   <ng-container *ngFor="let field of fields; let ind = index; trackBy:ind;">
     <ng-container *ngIf='field.type != "array"' dynamicField [field]="field" [group]="form">
     
@@ -27,21 +27,25 @@ import { FieldConfig, Validator } from "../../field.interface";
 
     <ng-container *ngIf='field.type == "array"' formArrayName="{{field.name}}">
         <ng-container *ngFor="let innerField of form.controls?.items?.controls; let i = index; trackBy:i;">
-         
+         <div class='row'>
           <ng-container *ngFor="let iField of field.formArray; let ix = index; trackBy:ix;">
               <ng-container dynamicField [field]="iField" [group]="form.controls?.items?.controls[i]"></ng-container>
           </ng-container>   
           <div class=" margin-top" >
-            <button mat-raised-button color="primary" (click)="addArray(field.formArray)"> + </button>
-            <button mat-raised-button color="primary" (click)="removeArray()" *ngIf='i != 0'> - </button>
+            <button class='pull-right margin-right' mat-raised-button color="primary" (click)="addArray(field.formArray)" *ngIf='i == form.controls?.items?.controls.length-1'> + </button>
+            <button class='pull-right margin-right' mat-raised-button color="primary" (click)="removeArray(i)" *ngIf='form.controls?.items?.controls.length-1 != 0'> - </button>
           </div> 
+          </div>
         </ng-container>
     </ng-container>
 
   </ng-container>
   </form>
   `,
-  styles: []
+  styles: [
+    '.margin-right { margin-right: 10px; } '
+      
+  ]
 })
 export class DynamicFormComponent implements OnInit {
   @Input() fields: FieldConfig[] = [];
@@ -87,6 +91,11 @@ export class DynamicFormComponent implements OnInit {
   addArray(formArray): void {
     var items = this.form.get('items') as FormArray;
     items.push(this.addItem(formArray));
+  }
+
+  removeArray(i): void {
+    var items = this.form.get('items') as FormArray;
+    items.removeAt(i);
   }
 
   createControl() {

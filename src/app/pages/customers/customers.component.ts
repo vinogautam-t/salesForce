@@ -4,13 +4,13 @@ import { Validators } from "@angular/forms";
 import { FieldConfig } from "../../field.interface";
 import { DynamicFormComponent } from "../../components/dynamic-form/dynamic-form.component";
 import {SelectionModel} from '@angular/cdk/collections';
+import { UtilityService } from '../../services/utility.service';
 import {ApiService} from '../../services/api/api.service';
 
 @Component({
   selector: 'app-customers',
   templateUrl: './customers.component.html',
-  styleUrls: ['./customers.component.scss'],
-  providers: [ApiService]
+  styleUrls: ['./customers.component.scss']
 })
 export class CustomersComponent implements OnInit {
 
@@ -18,7 +18,7 @@ export class CustomersComponent implements OnInit {
   isEditable: boolean;
   isDeletable: boolean;
 
-  constructor(public dialog: MatDialog, public apiService: ApiService) { }
+  constructor(public dialog: MatDialog, public apiService: ApiService, public utilityService: UtilityService) { }
 
   displayedColumns: string[] = ['select', 'position', 'name', 'email', 'mobile_no', 'address', 'state', 'city', 'pincode'];
   dataSource = new MatTableDataSource<CustomerInfo>(ELEMENT_DATA);
@@ -38,7 +38,7 @@ export class CustomersComponent implements OnInit {
      this.isEditable = false;
      this.isDeletable = false;
      this.apiService.getCustomerList().subscribe((data) => {
-        console.log(data);
+        // console.log(data);
        // ELEMENT_DATA = data;
      });
   }
@@ -154,7 +154,10 @@ export class CustomerAddModule {
 
   constructor(
     public dialogRef: MatDialogRef<CustomerAddModule>,
-    @Inject(MAT_DIALOG_DATA) public data) {
+    @Inject(MAT_DIALOG_DATA) public data, public utilityService: UtilityService) {
+      this.utilityService.getState().subscribe(function(res){
+        console.log(res);
+      });
       
     }
 
@@ -171,7 +174,7 @@ export class CustomerAddModule {
       inputType: "text",
       name: "name",
       value: (!!this.data.values && !!this.data.values.name) ? this.data.values.name : '',
-      width: '30%',
+      classes: "col-lg-3 col-sm-6 col-xs-12",
       validations: [
         {
           name: "required",
@@ -191,7 +194,7 @@ export class CustomerAddModule {
       inputType: "email",
       name: "email",
       value: (!!this.data.values && !!this.data.values.email) ? this.data.values.email : '',
-      width: '30%',
+      classes: "col-lg-3 col-sm-6 col-xs-12",
       validations: [
         {
           name: "required",
@@ -213,7 +216,7 @@ export class CustomerAddModule {
       inputType: "text",
       name: "mobile_no",
       value: (!!this.data.values && !!this.data.values.mobile_no) ? this.data.values.mobile_no : '',
-      width: '30%',
+      classes: "col-lg-3 col-sm-6 col-xs-12",
       validations: [
         {
           name: "required",
@@ -234,7 +237,7 @@ export class CustomerAddModule {
       label: "Address",
       name: "address",
       value: (!!this.data.values && !!this.data.values.address) ? this.data.values.address : '',
-      width: '30%',
+      classes: "col-lg-3 col-sm-6 col-xs-12",
       validations: [
         {
           name: "required",
@@ -248,7 +251,7 @@ export class CustomerAddModule {
       label: "State",
       name: "state",
       value: (!!this.data.values && !!this.data.values.state) ? this.data.values.state : '',
-      width: '30%',
+      classes: "col-lg-3 col-sm-6 col-xs-12",
       options: ["Tamil Nadu", "Kerela", "Andhra Pradesh", "Karnataka"]
     },
     {
@@ -256,7 +259,7 @@ export class CustomerAddModule {
       label: "City",
       name: "city",
       value: (!!this.data.values && !!this.data.values.city) ? this.data.values.city : '',
-      width: '30%',
+      classes: "col-lg-3 col-sm-6 col-xs-12",
       options: ["Chennai", "Madurai", "Trichy", "salem"]
     },
     {
@@ -265,7 +268,7 @@ export class CustomerAddModule {
       inputType: "text",
       name: "pincode",
       value: (!!this.data.values && !!this.data.values.pincode) ? this.data.values.pincode : '',
-      width: '30%',
+      classes: "col-lg-3 col-sm-6 col-xs-12",
       validations: [
       ]
     },

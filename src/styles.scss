@@ -14,6 +14,11 @@ margin-top: 15px;
 .margin-left {
 margin-left: 10px;
 }
+
+.margin-right {
+margin-right: 10px;
+}
+
 .radio-label-padding {
 padding-right: 10px;
 color: grey;
@@ -61,4 +66,72 @@ table {
     overflow: auto;
 }
 
+.wrapper, .row {
+    width: 100%;
+    margin: 0 auto;
+    clear: both; 
+}
 
+.wrapper:after,
+.row:after {
+    content: "";
+    display: table;
+    clear: both; 
+}
+
+%clearfix {
+    *zoom: 1;
+    &:before, 
+    &:after {
+        content: " ";
+        display: table;
+    }
+    &:after {
+        clear: both;
+    }
+}
+
+.col-lg-0{
+    width: 4.165%;    
+}
+
+@media (min-width: 576px) { 
+    @for $i from 1 through 12 {
+ 
+        .col-xs-#{$i} { 
+            width: 100% / 12 * $i;
+        }
+     
+    }
+ }
+
+ @media (min-width: 768px) { 
+    @for $i from 1 through 12 {
+ 
+        .col-sm-#{$i} { 
+            width: 100% / 12 * $i;
+        }
+     
+    }
+ }
+
+ @media (min-width: 992px) { 
+
+    @for $i from 1 through 12 {
+ 
+        .col-md-#{$i} { 
+            width: 100% / 12 * $i;
+        }
+     
+    }
+ }
+
+ @media (min-width: 1200px) {
+    @for $i from 1 through 12 {
+ 
+        .col-lg-#{$i} { 
+            width: 100% / 12 * $i;
+        }
+     
+    }
+ }

@@ -59,8 +59,6 @@ export class DynamicFieldDirective implements OnInit {
       this.componentRef = this.container.createComponent(factory);
       this.componentRef.instance.field = field;
       this.componentRef.instance.group = this.group;
-      console.log(field.name);
-      console.log(this.group.get[field.name]);
     }
   }
 
