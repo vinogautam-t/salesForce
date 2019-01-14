@@ -15,6 +15,7 @@ export class ItemFormComponent implements OnInit {
   constructor (public apiService: ApiService, public utilityService: UtilityService) {
   }
   regConfig: FieldConfig[];
+  itemIntiValues = {'items': [], 'Total': 0,'sgstTotal': 0,'cgstTotal': 0};
 
   @ViewChild(DynamicFormComponent) form: DynamicFormComponent;
 
@@ -68,7 +69,7 @@ export class ItemFormComponent implements OnInit {
             label: "Qty",
             inputType: "number",
             name: "qty",
-            value: '',
+            value: 0,
             classes: "col-lg-0",
             validations: [
               {
@@ -83,7 +84,7 @@ export class ItemFormComponent implements OnInit {
             label: "Rate (Rs)",
             inputType: "number",
             name: "rate",
-            value: '',
+            value: 0,
             classes: "col-lg-1",
             validations: [
               
@@ -93,8 +94,8 @@ export class ItemFormComponent implements OnInit {
             type: "input",
             label: "%Disc",
             inputType: "number",
-            name: "rate",
-            value: '',
+            name: "disc",
+            value: 0,
             classes: "col-lg-0",
             validations: [
               
@@ -105,7 +106,7 @@ export class ItemFormComponent implements OnInit {
             label: "%CGST",
             inputType: "number",
             name: "cgst_per",
-            value: '',
+            value: 0,
             classes: "col-lg-0",
             validations: [
               
@@ -116,7 +117,7 @@ export class ItemFormComponent implements OnInit {
             label: "CGST Amt",
             inputType: "number",
             name: "cgst_amt",
-            value: '',
+            value: 0,
             classes: "col-lg-1",
             validations: [
               
@@ -127,7 +128,7 @@ export class ItemFormComponent implements OnInit {
             label: " %SGST",
             inputType: "number",
             name: "sgst_per",
-            value: '',
+            value: 0,
             classes: "col-lg-0",
             validations: [
               
@@ -138,7 +139,7 @@ export class ItemFormComponent implements OnInit {
             label: "SGST Amt",
             inputType: "number",
             name: "sgst_amt",
-            value: '',
+            value: 0,
             classes: "col-lg-1",
             validations: [
               
@@ -149,68 +150,120 @@ export class ItemFormComponent implements OnInit {
             label: "Total",
             inputType: "number",
             name: "item_total",
-            value: '',
+            value: 0,
             classes: "col-lg-1",
             disable: true,
             validations: [
               
             ]
           },
-          // {
-          //   type: "button",
-          //   label: "+",
-          //   classes: "col-lg-2",
-          //   validations: [
-              
-          //   ]
-          // }
         ]
       },
       {
         type: "input",
-        label: "Sub total",
-        inputType: "number",
-        name: "subTotal",
-        value: '',
-        classes: "col-lg-2",
-        validations: [
-          {
-            name: "required",
-            validator: Validators.required,
-            message: "Item Name Required"
-          }
-        ]
-      },
-      {
-        type: "input",
-        label: " total",
+        label: "Overall Total",
         inputType: "number",
         name: "Total",
-        value: '',
-        classes: "col-lg-2",
+        value: 0,
+        classes: "col-lg-1 pull-right",
         validations: [
-          {
-            name: "required",
-            validator: Validators.required,
-            message: "Item Name Required"
-          }
+          
+        ]
+      },
+      {
+        type: "input",
+        label: "SGST Total",
+        inputType: "number",
+        name: "sgstTotal",
+        value: 0,
+        classes: "col-lg-1 pull-right",
+        validations: [
+          
+        ]
+      },
+      {
+        type: "input",
+        label: "CGST Total",
+        inputType: "number",
+        name: "cgstTotal",
+        value: 0,
+        classes: "col-lg-1 pull-right",
+        validations: [
+          
         ]
       },
     ];
   }
 
-  onChangeFields(value: any, formInfo){
+  modifiedItemArr(Obj: any){
+    var that = this;
+    if(Obj.action == 'add'){
+      that.itemIntiValues.items.push(
+        {
+          'name': '',
+          'hsn_sac': '',
+          'qty': 0,
+          'rate': 0,
+          'disc': 0,
+          'cgst_per': 0,
+          'cgst_amt': 0,
+          'sgst_per': 0,
+          'sgst_amt': 0,
+          'item_total': 0
+        }
+      );
+    }else if(Obj.action == 'remove'){
+      that.itemIntiValues.items.splice(Obj.index, 1);
+    }
+  }
+
+  onChangeFields(Obj: any){
     let that = this;
-    console.log(formInfo);
-    that.regConfig.map(function(fieldSet, index){
-      if(fieldSet.label == 'Item info'){
-        fieldSet.formArray.map((item, i) => {
-          if(item.name == 'item_total'){
-            that.regConfig[index].formArray[i].setValue(30);
-          }
-        });
-      }
-    });
+    let otherItemValue = {'items': [], 'Total': 0,'sgstTotal': 0,'cgstTotal': 0};
+    if(JSON.stringify(Obj.values) != JSON.stringify(that.itemIntiValues)){
+      Obj.formInfo.controls.items.controls.map(function(item, index){
+        let itemValues = Obj.values.items[index];
+        let calcItem = Obj.values.items[index];
+        // calcItem.rate = 0; calcItem.item_total = 0; calcItem.cgst_amt = 0; calcItem.sgst_amt = 0;
+        let perVal = 0;
+        if(itemValues.rate != "" && itemValues.rate != 0 && itemValues.disc != "" && itemValues.disc != 0){
+          perVal = (parseFloat(itemValues.rate) * parseFloat(itemValues.disc)) / 100;
+        }
+        if(calcItem.rate == 0){
+          calcItem.rate = parseFloat(itemValues.rate);
+        }
+        calcItem.rate = parseFloat(calcItem.rate);
+        if(itemValues.rate != "" && itemValues.rate != 0 && itemValues.qty != "" && itemValues.qty != 0){
+         
+          calcItem.item_total = (calcItem.rate - perVal) * parseFloat(itemValues.qty);
+          otherItemValue.Total = otherItemValue.Total + calcItem.item_total;
+          
+          Obj.values.items[index].item_total = calcItem.item_total;
+        }
+  
+        if(itemValues.cgst_per != "" && itemValues.cgst_per != 0 && itemValues.item_total != "" && itemValues.item_total != 0){
+          calcItem.cgst_amt = (itemValues.item_total * itemValues.cgst_per) / 100
+          Obj.values.items[index].cgst_amt = calcItem.cgst_amt;
+          otherItemValue.cgstTotal = otherItemValue.cgstTotal + calcItem.cgst_amt;
+          
+        }
+  
+        if(itemValues.sgst_per != "" && itemValues.sgst_per != 0 && itemValues.item_total != "" && itemValues.item_total != 0){
+          calcItem.sgst_amt = (itemValues.item_total * itemValues.sgst_per) / 100
+          Obj.values.items[index].sgst_amt = calcItem.sgst_amt;
+          otherItemValue.sgstTotal = otherItemValue.sgstTotal + calcItem.sgst_amt;
+         
+        }
+          otherItemValue.items.push(calcItem);
+      });
+
+      otherItemValue.Total = otherItemValue.Total + otherItemValue.cgstTotal;
+      otherItemValue.Total = otherItemValue.Total + otherItemValue.sgstTotal;
+
+      that.itemIntiValues = otherItemValue;
+      Obj.formInfo.patchValue(otherItemValue);
+    }
+      
   }
 
 

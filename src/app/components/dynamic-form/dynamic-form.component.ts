@@ -19,7 +19,7 @@ import { FieldConfig, Validator } from "../../field.interface";
   exportAs: "dynamicForm",
   selector: "dynamic-form",
   template: `
-  <form *ngIf='!!form' class="dynamic-form" [formGroup]="form" (submit)="onSubmit($event)" (changeEvent)="onChangeFields($event, 'form')">
+  <form *ngIf='!!form' class="dynamic-form" [formGroup]="form" (submit)="onSubmit($event)" (changeEvent)="onChangeFields($event)" (modifiedArr)="modifieditemArr($event)">
   <ng-container *ngFor="let field of fields; let ind = index; trackBy:ind;">
     <ng-container *ngIf='field.type != "array"' dynamicField [field]="field" [group]="form">
     
@@ -50,6 +50,7 @@ import { FieldConfig, Validator } from "../../field.interface";
 export class DynamicFormComponent implements OnInit {
   @Input() fields: FieldConfig[] = [];
   @Output() changeEvent: EventEmitter<any> = new EventEmitter<any>();
+  @Output()  modifiedArr: EventEmitter<any> = new EventEmitter<any>();
   @Output() submit: EventEmitter<any> = new EventEmitter<any>();
 
   form: FormGroup;
@@ -90,12 +91,18 @@ export class DynamicFormComponent implements OnInit {
 
   addArray(formArray): void {
     var items = this.form.get('items') as FormArray;
+    let obj = {'action': 'add', 'index': items.length-1};
+    this.modifiedArr.emit(obj);
     items.push(this.addItem(formArray));
+    
   }
 
   removeArray(i): void {
     var items = this.form.get('items') as FormArray;
+    let obj = {'action': 'remove', 'index': i};
+    this.modifiedArr.emit(obj);
     items.removeAt(i);
+    
   }
 
   createControl() {
@@ -122,7 +129,8 @@ export class DynamicFormComponent implements OnInit {
 
   initChangeCall() {
     this.form.valueChanges.subscribe(val => {
-      this.changeEvent.emit(val);
+      let emitObj = {'formInfo': this.form, 'values': val}
+      this.changeEvent.emit(emitObj);
     });
   }
 
