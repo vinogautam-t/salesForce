@@ -146,7 +146,11 @@ export class CustomerInputComponent implements OnInit {
     if(value.state != ''){
       this.regConfig.map(d => {
         if(d.name == 'city'){
-          Object.keys(this.StateList).filter(function(key, val){ if(key == value.state){ d.options = that.StateList[key]; } });  
+          Object.keys(this.StateList).filter(function(key, val){ 
+            if(key == value.values.state){ 
+              d.options = that.StateList[key]; 
+            } 
+          });  
         }
       });
     }

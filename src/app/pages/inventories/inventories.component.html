@@ -4,7 +4,104 @@
   </div>
 
   <div class="mat-elevation-z8 ">
+    <div class="table-container">
+      <table mat-table matSort [dataSource]="dataSource">
+        <!-- Checkbox Column -->
+        <ng-container matColumnDef="select">
+          <th mat-header-cell *matHeaderCellDef>
+            <mat-checkbox (click)="allRowClick($event)" (change)="$event ? masterToggle() : null"
+                          [checked]="selection.hasValue() && isAllSelected()"
+                          [indeterminate]="selection.hasValue() && !isAllSelected()">
+            </mat-checkbox>
+          </th>
+          <td mat-cell *matCellDef="let row">
+            <mat-checkbox (click)="rowClick($event, row)"
+                          (change)="$event ? selection.toggle(row) : null"
+                          [checked]="selection.isSelected(row)">
+            </mat-checkbox>
+          </td>
+        </ng-container>
 
-  </div>
+        <!-- Position Column -->
+        <ng-container matColumnDef="position">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> No. </th>
+          <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+          <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+        </ng-container>
+
+         <!-- Hsn sac Column -->
+         <ng-container matColumnDef="hsn_sac">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> HSN / SAC </th>
+          <td mat-cell *matCellDef="let element"> {{element.hsn_sac}} </td>
+        </ng-container>
+
+        <!-- Product code Column -->
+        <ng-container matColumnDef="product_code">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Product Code </th>
+          <td mat-cell *matCellDef="let element"> {{element.product_code}} </td>
+        </ng-container>
+
+        <!-- Stock Column -->
+        <ng-container matColumnDef="stock">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Stock </th>
+          <td mat-cell *matCellDef="let element"> {{element.stock}} </td>
+        </ng-container>
+
+        <!-- MOQ Column -->
+        <ng-container matColumnDef="moq">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> MOQ </th>
+          <td mat-cell *matCellDef="let element"> {{element.moq}} </td>
+        </ng-container>
+
+        <!-- Purchase price Column -->
+        <ng-container matColumnDef="purchase_price">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Purchase Price </th>
+          <td mat-cell *matCellDef="let element"> {{element.purchase_price}} </td>
+        </ng-container>
+
+        <!-- Sales price Column -->
+        <ng-container matColumnDef="sales_price">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Sales Price </th>
+          <td mat-cell *matCellDef="let element"> {{element.sales_price}} </td>
+        </ng-container>
+
+        <!-- Igst per Column -->
+        <ng-container matColumnDef="igst_percentage">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> IGST Percentage </th>
+          <td mat-cell *matCellDef="let element"> {{element.igst_percentage}} </td>
+        </ng-container>
+
+         <!-- cgst per Column -->
+         <ng-container matColumnDef="cgst_percentage">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> CGST Percentage </th>
+          <td mat-cell *matCellDef="let element"> {{element.cgst_percentage}} </td>
+        </ng-container>
+
+        <!-- sgst per Column -->
+        <ng-container matColumnDef="sgst_percentage">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> SGST Percentage </th>
+          <td mat-cell *matCellDef="let element"> {{element.sgst_percentage}} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </div>
+
+
+    <mat-paginator [pageSizeOptions]="[5, 10]" showFirstLastButtons></mat-paginator>
+
+    <footer>
+      <button class='pull-right' [disabled]='!isDeletable' mat-button mat-raised-button color='warn' (click)="deleteProduct()">Delete</button>
+      <button class='pull-right' [disabled]='!isEditable' mat-button mat-raised-button color='accent' (click)="editProduct()">Edit</button>
+      <button class='pull-right' [disabled]='selectedRows.length > 0' mat-button mat-raised-button color='primary' (click)="openDialog('add')">Add</button>
+      <div class='clearfix'></div>
+    </footer> 
+   </div>
 
 </div>

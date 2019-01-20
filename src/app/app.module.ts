@@ -21,7 +21,7 @@ import { CustomersComponent } from './pages/customers/customers.component';
 import { CustomerAddModule } from './pages/customers/customers.component';
 import { AddCustomerComponent } from './pages/customers/add-customer/add-customer.component';
 import { TextareaComponent } from './components/textarea/textarea.component';
-import { InventoriesComponent } from './pages/inventories/inventories.component';
+import { InventoriesComponent, ProductAddModule } from './pages/inventories/inventories.component';
 
 import { ApiService } from './services/api/api.service';
 import { UtilityService } from './services/utility.service';
@@ -47,6 +47,7 @@ import { ItemFormComponent } from './components/item-form/item-form.component';
     CustomerAddModule,
     TextareaComponent,
     InventoriesComponent,
+    ProductAddModule,
     CustomerInputComponent,
     AutocompleteComponent,
     ItemFormComponent
@@ -70,7 +71,8 @@ import { ItemFormComponent } from './components/item-form/item-form.component';
     TextareaComponent,
     AutocompleteComponent,
     CustomerAddModule,
-    ItemFormComponent
+    ItemFormComponent,
+    ProductAddModule
   ],
   providers: [ApiService, UtilityService],
   bootstrap: [AppComponent]
